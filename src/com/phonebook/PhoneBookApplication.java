@@ -5,9 +5,10 @@ import java.util.Scanner;
 public class PhoneBookApplication {
 
     public static void main(String[] args) {
+        PhoneBookService service = new PhoneBookService();
+
         System.out.println("Welcome to Phone Book Application");
         Scanner scanner = new Scanner(System.in);
-        PhoneBookService service = new PhoneBookService();
 
         while (true) {
             System.out.println("Press (A) to Add new contact");
@@ -17,25 +18,18 @@ public class PhoneBookApplication {
 
             String input = scanner.nextLine().toUpperCase();
             switch (input) {
-                case "A":
-                    service.addContact();
-                    break;
-                case "S":
-                    System.out.println(service.showAllContacts());
-                    break;
-                case "F":
-                    service.findContactByLastName();
-                    break;
-                case "Q":
+                case "A" -> service.addContact();
+                case "S" -> System.out.println(service.showAllContacts());
+                case "F" -> service.findContactByLastName();
+                case "Q" -> {
                     System.out.println("Are you sure you want to exit? (Y/N)");
                     String confirmExit = scanner.nextLine().toUpperCase();
                     if (confirmExit.equals("Y")) {
                         System.out.println("Exiting the program...");
                         System.exit(0);
                     }
-                    break;
-                default:
-                    System.out.println("Invalid option. Please try again.");
+                }
+                default -> System.out.println("Invalid option. Please try again.");
             }
         }
     }
