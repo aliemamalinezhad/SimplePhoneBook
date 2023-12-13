@@ -1,9 +1,6 @@
 package com.phonebook;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PhoneBookService {
     private final HashMap<String, PhoneBook> map;
@@ -11,22 +8,41 @@ public class PhoneBookService {
         map = new HashMap<>();
     }
 
-    public void addItem(PhoneBook phoneBook){
-        map.put(phoneBook.getLastName(), phoneBook);
+    public void addContact(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter new name please : ");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter new Phone Number please : ");
+        String phoneNumber = scanner.nextLine();
+
+        PhoneBook phoneBook = new PhoneBook(name, phoneNumber);
+        map.put(name, phoneBook);
+
+        System.out.println("New Number Added Successfully \n");
     }
 
-    public PhoneBook findByLastName(String lastName) {
-        for (Map.Entry<String, PhoneBook> entry : map.entrySet()) {
+    public void findContactByLastName() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a name to search for: ");
+        String name = scanner.nextLine();
+        boolean found = false;
+        for(Map.Entry<String, PhoneBook> entry: map.entrySet()){
             String key = entry.getKey();
-            if (key.equals(lastName)) {
-                return entry.getValue();
+            if(key.equals(name)){
+                System.out.println("Contact found: " + entry.getValue());
+                found = true;
+                break;
             }
         }
-        System.out.println("This lastName does not exists");
-        return null;
+        if(!found){
+            System.out.println("Contact with name " + name + " not found.");
+        }
     }
 
-    public List<PhoneBook> findAll() {
+    public List<PhoneBook> showAllContacts() {
         List<PhoneBook> phoneBookList = new ArrayList<>();
         for (Map.Entry<String, PhoneBook> entry : map.entrySet()) {
             PhoneBook value = entry.getValue();
